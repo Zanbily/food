@@ -1,5 +1,7 @@
 <template>
-  <form @submit.prevent>
+  <form class="auth-form" @submit.prevent>
+    <h1><i class="fas fa-user"></i> {{ method }}</h1>
+    <hr>
     <div class="form-group">
       <label for="email">Email</label>
       <input type="email" v-model="email" name="email" id="email" />
@@ -13,8 +15,8 @@
       <input type="password" v-model="confirmPassword" name="confirm_password" id="confirm_password" />
     </div>
     <p v-if="feedback" class="alert" v-bind:class="{'good-alert': goodAlert}">{{ feedback }}</p>
-    <button @click="signUpOrLogin" class="btn btn-primary">{{ method }}</button>
-    <button @click="switchMethod" class="btn btn-primary">Switch to {{ otherMethod }}</button>
+    <button @click="signUpOrLogin" class="btn btn-light">{{ method }}</button>
+    <button @click="switchMethod" class="btn btn-dark">Switch to {{ otherMethod }}</button>
   </form>
 </template>
 <script>
@@ -99,7 +101,7 @@ export default {
       if (found) {
         if (correctPassword) {
           this.logInorOut(true)
-          this.$router.push({ name: 'Home' })
+          this.$router.push({ name: 'Recipes' })
         } else {
           this.feedback = 'Wrong Password'
         }
@@ -142,38 +144,48 @@ export default {
 <style lang="scss" scoped>
 @import "@/scss/_variables.scss";
 form {
+  // margin: 8px;
+  background: $primary-color;
+  box-shadow: 2px 2px 5px $dark-color;
   padding: 2rem;
-  background: $secondary-color;
-  border-radius: 15px;
-  box-shadow: 2px 2px 5px gray;
+  color: $dark-color;
   label {
     display: block;
     font-weight: bold;
-    color: $dark-color;
   }
   input[type="password"],
   input[type="email"] {
     width: 100%;
-    height: 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: $dark-color;
+    height: 2.5rem;
     padding: 0.25rem;
-    margin: 0.5rem 0 1rem 0;
-    border: 1px $light-color dotted;
-    border-radius: 5px;
+    margin-bottom: 1rem;
+    border: none;
+    border-bottom: 3px $dark-color solid;
+    background: $primary-color;
+    transition: background 0.5s ease-in-out;
+    // &:hover {
+    //   background: lighten($primary-color, 20);
+    // }
     &:focus {
       outline: none;
-      border: 3px $primary-color solid;
+      background: $primary-color;
     }
   }
   .btn {
-    border-radius: 5px;
     margin-right: 10px;
+    margin-top: 20px;
   }
   .alert {
-    color: $primary-color;
-    padding-bottom: 1rem;
+    color: $dark-color;
   }
   .good-alert {
       color: green;
+  }
+  hr {
+    margin: 20px 0;
   }
 }
 </style>
